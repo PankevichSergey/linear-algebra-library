@@ -3,6 +3,7 @@
 //
 
 #include "Mat.h"
+#include "Perm.h"
 
 Mat::Mat(size_t n): n_(n), m_(n), t_(std::vector<Vec>(n, Vec(n))) {
     if (n == 0) {
@@ -28,6 +29,21 @@ Mat::Mat(const std::vector<Vec> &mat) {
             throw std::logic_error("can't create matrix with different rows' sizes");
         }
         t_.push_back(vec);
+    }
+}
+
+Mat::Mat(const std::vector<std::vector<Num>> &mat) {
+    if (mat.size() == 0 || mat[0].size() == 0) {
+        throw std::logic_error("can't create empty matrix");
+    }
+    m_ = mat.size();
+    n_ = mat[0].size();
+    t_.reserve(m_);
+    for (const auto& vec : mat) {
+        if (vec.size() != n_) {
+            throw std::logic_error("can't create matrix with different rows' sizes");
+        }
+        t_.emplace_back(vec);
     }
 }
 
@@ -128,7 +144,7 @@ Mat &Mat::operator-=(const Mat &rhs) {
         throw std::logic_error("can't subtract matrices of different size");
     }
     for (size_t i = 0; i < m_; ++i) {
-        for (size_t j = 0; j < n_; ++i) {
+        for (size_t j = 0; j < n_; ++j) {
             t_[i][j] -= rhs.t_[i][j];
         }
     }
@@ -184,10 +200,10 @@ void Mat::Eliminate() {
             if (t_[i][j] == 0) {
                 continue;
             }
-            std::swap(t_[i], t_[done]);
             for (size_t i1 = i + 1; i1 < m_; ++i1) {
                 t_[i1] -= t_[i] * (t_[i1][j] / t_[i][j]);
             }
+            std::swap(t_[i], t_[done]);
             ++done;
         }
     }
@@ -249,3 +265,127 @@ Num Mat::Trace() const {
     }
     return result;
 }
+
+Mat Mat::ConRight(const Mat &rhs) const {
+    assert(rhs.Height() == this->Height());
+    Mat res(m_, n_ + rhs.n_);
+    for (int i = 0; i < m_; ++i) {
+        for (int j = 0; j < n_; ++j) {
+            res[i][j] = t_[i][j];
+        }
+        for (int j = 0; j < rhs.n_; ++j) {
+            res[i][n_ + j] = rhs[i][j];
+        }
+    }
+    return res;
+}
+
+Mat Mat::ConDown(const Mat &rhs) const {
+    assert(rhs.Width() == this->Width());
+    Mat res(m_ + rhs.m_, n_);
+    for (int j = 0; j < n_; ++j) {
+        for (int i = 0; i < m_; ++i) {
+            res[i][j] = t_[i][j];
+        }
+        for (int i = 0; i < rhs.m_; ++i) {
+            res[i + m_][j] = rhs[i][j];
+        }
+    }
+    return res;
+}
+
+bool Mat::HasInverse() const {
+    if (n_ != m_) {
+        throw std::logic_error("non-square matrix doesn't have inverse");
+    }
+    Mat help(*this);
+    help.Eliminate();
+    return help == Identity(m_);
+}
+
+Mat Mat::GetInverse() const {
+    if (!this->HasInverse()) {
+        throw std::logic_error("can't get inverse of matrix that is not invertible");
+    }
+    Mat help = ConRight(Identity(m_));
+    help.Eliminate();
+    return help.SliceCols(n_, n_ + n_);
+}
+
+Mat Mat::SliceRows(size_t l, size_t r) const {
+    if (r <= l || r > m_) {
+        throw std::logic_error("invalid slice bounds");
+    }
+    Mat help(r - l, n_);
+    for (size_t i = 0; i < r - l; ++i) {
+        for (size_t j = 0; j < n_; ++j) {
+            help[i][j] = t_[l + i][j];
+        }
+    }
+    return help;
+}
+
+Mat Mat::SliceCols(size_t l, size_t r) const {
+    if (r <= l || r > n_) {
+        throw std::logic_error("invalid slice bounds");
+    }
+    Mat help(m_, r - l);
+    for (size_t i = 0; i < m_; ++i) {
+        for (size_t j = 0; j < r - l; ++j) {
+            help[i][j] = t_[i][l + j];
+        }
+    }
+    return help;
+}
+
+Num Mat::Det() const {
+    if (n_ != m_) {
+        throw std::logic_error("det of non-square matrix is not defined");
+    }
+    Perm p(n_);
+    Num det;
+    do {
+        Num cur(1);
+        for (int i = 0; i < n_; ++i) {
+            cur *= t_[i][p[i]];
+        }
+        cur *= p.Sgn();
+        det += cur;
+    } while (p.NextPermutation());
+    return det;
+}
+
+Poly PolyDet(const std::vector<std::vector<Poly>>& A) {
+    Perm p(A.size());
+    Poly det;
+    do {
+        Poly cur({1});
+        for (int i = 0; i < A.size(); ++i) {
+            cur = cur * A[i][p[i]];
+        }
+        if (p.Sgn() == -1) {
+            det -= cur;
+        } else {
+            det += cur;
+        }
+    } while (p.NextPermutation());
+    return det;
+}
+
+Poly Mat::GetPoly() const {
+    if (n_ != m_) {
+        throw std::logic_error("characteristic polynomial of non-square matrix is not defined");
+    }
+    std::vector<std::vector<Poly>> help(n_, std::vector<Poly>(n_));
+    for (int i = 0; i < n_; ++i) {
+        for (int j = 0; j < n_; ++j) {
+            if (i != j) {
+                help[i][j] = Poly({-t_[i][j].Toll()});
+            } else {
+                help[i][j] = Poly({-t_[i][j].Toll(), 1});
+            }
+        }
+    }
+    return PolyDet(help);
+}
+

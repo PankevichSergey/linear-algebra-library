@@ -1,102 +1,116 @@
 #include <iostream>
 #include "Mat.h"
+#include "Perm.h"
+#include "Poly.h"
 
 using namespace std;
 
-
 void task1() {
-    cout << "Task1 info:\n";
-    Mat a = vector<vector<ll>>{{2,  -1, -1},
-                               {-2, -4, 6},
-                               {-1, 3,  -2},
-                               {1,  2,  -3},
-                               {3,  4,  -7}
-    };
-    Mat b = vector<vector<ll>>{{-2, 0, 0, 1},
-                               {2,  0, 1, 0},
-                               {1,  1, 0, 0}
-    };
-    Mat c = a * b;
-    cout << c << '\n';
-    c.Eliminate();
-    cout << c << '\n';
+    cout << "Task 1 info:\n\n";
+    // all permutations are 0-based before printing
+    Perm a({7, 4, 5, 2, 6, 3, 1, 0});
+    Perm b({1, 3, 2, 7, 0, 6, 5, 4});
+    Perm c({{0, 7, 4, 1, 6}, {2, 3, 5}});
+    b ^= 11;
+    a ^= -1;
+    Perm rhs = (a * b) ^ 185;
+    Perm sigma(8);
+    do {
+        if (sigma * (c * sigma) == rhs) {
+            sigma.Add1();
+            cout << sigma << "is a solution\n";
+            sigma.Subtract1();
+        }
+    } while (sigma.NextPermutation());
+
+}
+void task2() {
+    cout << "Task 2 info:\n\n";
+    Mat A = vector<vector<ll>>{{-3, -3, 3,  -1},
+                               {-1, -1, 3,  -3},
+                               {-1, -1, -3, 1},
+                               {2,  3,  3,  -1}};
+    Mat B = vector<vector<ll>>{{-2, 2,  1,  2},
+                               {-2, 2,  -1, 1},
+                               {-2, -3, 3,  -2},
+                               {-1, -1, 1,  -2}};
+    Mat C = vector<vector<ll>>{{1,  1,  -1, 1},
+                               {1,  2,  -2, 2},
+                               {-1, -2, 3,  -1},
+                               {1,  2,  -3, 2}};
+    Mat Y = vector<vector<ll>>{{-8, 3,  -7,  5},
+                               {4,  -1, 2,   -4},
+                               {7,  -4, 7,   -10},
+                               {3,  -6, -10, -1}};
+    if (A.HasInverse() && B.HasInverse() && C.HasInverse()) {
+        cout << "A, B, C are invertible\n";
+    }
+    cout << "X:\n" << (B * C.GetInverse() * A) - Y << '\n';
+
 }
 
-void task5() {
-    cout << "Task5 info:\n";
-    Mat a = vector<vector<ll>>{{4,  0},
-                               {1,  0},
-                               {-2, 0}
-    };
-    Mat b = vector<vector<ll>>{{0, 0,  0},
-                               {3, -4, 4}
-    };
-    Mat A = vector<vector<ll>>{{1, 8,  -8},
-                               {7, -7, 7},
-                               {1, -6, 6}
-    };
-    for (a[0][1] = -2; a[0][1] != 3; a[0][1] += 1) {
-        for (a[1][1] = -2; a[1][1] != 3; a[1][1] += 1) {
-            for (a[2][1] = -2; a[2][1] != 3; a[2][1] += 1) {
-                for (b[0][0] = -2; b[0][0] != 3; b[0][0] += 1) {
-                    for (b[0][1] = -2; b[0][1] != 3; b[0][1] += 1) {
-                        for (b[0][2] = -2; b[0][2] != 3; b[0][2] += 1) {
-                            if (a * b == A) {
-                                cout << a << '\n';
-                                cout << b << '\n';
-                                cout << b * a << '\n';
-                                cout << (A^2) * Num(1, 7) << '\n';
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
+Poly CalcDet(const vector<vector<Poly>>& A) {
+    Perm p(A.size());
+    Poly det;
+    do {
+        Poly cur({1});
+        for (int i = 0; i < A.size(); ++i) {
+            cur = cur * A[i][p[i]];
         }
-    }
-
+        if (p.Sgn() == -1) {
+            det -= cur;
+        } else {
+            det += cur;
+        }
+    } while (p.NextPermutation());
+    return det;
 }
 
 void task3() {
-    cout << "Task3 info:\n";
-    Mat h = vector<vector<ll>>{{9,  2,  -3, 0,  0,  0},
-                               {-9, -7, -6, 0,  0,  0},
-                               {0,  0,  0,  9,  2,  -3},
-                               {0,  0,  0,  -9, -7, -6}
-    };
-    cout << h << '\n';
-    h.Eliminate();
-    cout << h << '\n';
+    cout << "Task 3 info:\n\n";
+    Mat A = vector<vector<ll>>{{3, 4, 2, -1},
+                               {-5, -3, 5, 3},
+                               {2, 4, 4, -1},
+                               {0, 0, 1, 2}};
+
+    cout << A.GetPoly() << "\n\n";
+    A ^= 2;
+    A -= Mat::Identity(4) * 4;
+    cout << Num(1) / (A.Det() * A.Det()) << '\n';
 }
 
-void task2() {
-    cout << "Task2 info\n";
+void task4() {
+    cout << "Task 4 info:\n\n";
+    vector<vector<Poly>> A = {{Poly({0, 1}), Poly({-6}), Poly({-1}), Poly({-3}), Poly({2}), Poly({-2}), Poly({-8})},
+                              {Poly({8}), Poly({7}), Poly({-3}), Poly({5}), Poly({-2}), Poly({7}), Poly({0, 1})},
+                              {Poly({4}), Poly({0, 1}), Poly({-7}), Poly({-3}), Poly({5}), Poly({0, 1}), Poly({-3})},
+                              {Poly({-4}), Poly({-3}), Poly({3}), Poly({0, 1}), Poly({6}), Poly({-5}), Poly({7})},
+                              {Poly({-5}), Poly({-2}), Poly({0, 1}), Poly({1}), Poly({8}), Poly({-9}), Poly({5})},
+                              {Poly({-1}), Poly({7}), Poly({9}), Poly({0, 1}), Poly({-4}), Poly({5}), Poly({-3})},
+                              {Poly({-2}), Poly({2}), Poly({3}), Poly({5}), Poly({0, 1}), Poly({-6}), Poly({-5})}};
 
-    // t = 0 solver
-    auto build = [](int t) {
-        cout << "t = " << t << " :\n";
-        return vector<vector<ll>>{{3, 0, -4 * t},
-                                  {-2, 3, -8 - 2 * t},
-                                  {0, 0, 3 + t}
-        };
-    };
-    {
-        Mat A = build(0);
-        cout << A << '\n';
-        cout << (A^2) << '\n';
-        Mat c = vector<vector<ll>>{{1, 3,  9},
-                                   {0, -2, -12},
-                                   {0, -8, -48}
-        };
-        c.Eliminate();
-        cout << c << '\n';
-    }
-
+    cout << CalcDet(A) << '\n';
 }
+
+void task5() {
+    cout << "Task 5 info:\n\n";
+    Mat A = vector<vector<ll>>{{4, 8},
+                               {-4, -8},
+                               {-1, -2},
+                               {2, 4},
+                               {3, 6}};
+    Mat B = vector<vector<ll>>{{-2, 2, 1, -1, 3},
+                               {3, 1, -1, 2, -3}};
+    Mat C = A * B;
+    cout << C << '\n';
+    cout << C.GetPoly() << '\n';
+}
+
 
 int main() {
     task1();
     task2();
     task3();
+    task4();
     task5();
 }
