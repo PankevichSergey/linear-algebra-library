@@ -6,49 +6,79 @@
 
 #IncludeRegexTransform: 
 
-/Users/honeybadger/hse/linal/Mat.h
+/Users/honeybadger/hse/linear-algebra-library/Mat.cpp
+Mat.h
+/Users/honeybadger/hse/linear-algebra-library/Mat.h
+Perm.h
+/Users/honeybadger/hse/linear-algebra-library/Perm.h
+
+/Users/honeybadger/hse/linear-algebra-library/Mat.h
 iostream
 -
 vector
 -
 Num.h
-/Users/honeybadger/hse/linal/Num.h
+/Users/honeybadger/hse/linear-algebra-library/Num.h
 Vec.h
-/Users/honeybadger/hse/linal/Vec.h
+/Users/honeybadger/hse/linear-algebra-library/Vec.h
 Poly.h
-/Users/honeybadger/hse/linal/Poly.h
+/Users/honeybadger/hse/linear-algebra-library/Poly.h
 
-/Users/honeybadger/hse/linal/Num.h
+/Users/honeybadger/hse/linear-algebra-library/Num.cpp
+Num.h
+/Users/honeybadger/hse/linear-algebra-library/Num.h
+algorithm
+-
+
+/Users/honeybadger/hse/linear-algebra-library/Num.h
 cstdint
 -
 iostream
 -
 
-/Users/honeybadger/hse/linal/Perm.h
+/Users/honeybadger/hse/linear-algebra-library/Perm.cpp
+Perm.h
+/Users/honeybadger/hse/linear-algebra-library/Perm.h
+numeric
+-
+
+/Users/honeybadger/hse/linear-algebra-library/Perm.h
 vector
 -
 iostream
 -
 
-/Users/honeybadger/hse/linal/Poly.h
+/Users/honeybadger/hse/linear-algebra-library/Poly.cpp
+Poly.h
+/Users/honeybadger/hse/linear-algebra-library/Poly.h
+algorithm
+-
+
+/Users/honeybadger/hse/linear-algebra-library/Poly.h
 iostream
 -
 vector
 -
 
-/Users/honeybadger/hse/linal/Vec.h
+/Users/honeybadger/hse/linear-algebra-library/Vec.cpp
+Vec.h
+/Users/honeybadger/hse/linear-algebra-library/Vec.h
+
+/Users/honeybadger/hse/linear-algebra-library/Vec.h
 vector
 -
 Num.h
-/Users/honeybadger/hse/linal/Num.h
+/Users/honeybadger/hse/linear-algebra-library/Num.h
 
-/Users/honeybadger/hse/linal/main.cpp
+/Users/honeybadger/hse/linear-algebra-library/main.cpp
 iostream
 -
 Mat.h
-/Users/honeybadger/hse/linal/Mat.h
+/Users/honeybadger/hse/linear-algebra-library/Mat.h
 Perm.h
-/Users/honeybadger/hse/linal/Perm.h
+/Users/honeybadger/hse/linear-algebra-library/Perm.h
 Poly.h
-/Users/honeybadger/hse/linal/Poly.h
+/Users/honeybadger/hse/linear-algebra-library/Poly.h
+
+/Users/honeybadger/hse/linear-algebra-library/trash.cpp
 
