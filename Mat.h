@@ -46,7 +46,7 @@ public:
     void Eliminate();
     Num Trace() const;
     Num Det() const;
-    Poly GetPoly() const;
+    Poly GetCharPoly() const;
 private:
     size_t m_ = 0;
     size_t n_ = 0;

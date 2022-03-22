@@ -338,23 +338,37 @@ Mat Mat::SliceCols(size_t l, size_t r) const {
     return help;
 }
 
+
 Num Mat::Det() const {
     if (n_ != m_) {
         throw std::logic_error("det of non-square matrix is not defined");
     }
-    Perm p(n_);
-    Num det;
-    do {
-        Num cur(1);
-        for (int i = 0; i < n_; ++i) {
-            cur *= t_[i][p[i]];
+    Num det(1);
+    std::vector<Vec> t(t_);
+    for (size_t j = 0; j < n_; ++j) {
+        size_t best = n_;
+        for (size_t i = j; i < n_; ++i) {
+            if (t[i][j] == 0) {
+                continue;
+            }
+            if (best == n_  || t[best][j].Abs() < t[i][j].Abs()) {
+                best = i;
+            }
         }
-        cur *= p.Sgn();
-        det += cur;
-    } while (p.NextPermutation());
+        if (best == n_) {
+            return 0;
+        }
+        if (best != j) {
+            det *= -1;
+            std::swap(t[best], t[j]);
+        }
+        for (size_t i = j + 1; i < n_; ++i) {
+            t[i] -= t[j] * (t[i][j] / t[j][j]);
+        }
+        det *= t[j][j];
+    }
     return det;
 }
-
 Poly PolyDet(const std::vector<std::vector<Poly>>& A) {
     Perm p(A.size());
     Poly det;
@@ -372,7 +386,7 @@ Poly PolyDet(const std::vector<std::vector<Poly>>& A) {
     return det;
 }
 
-Poly Mat::GetPoly() const {
+Poly Mat::GetCharPoly() const {
     if (n_ != m_) {
         throw std::logic_error("characteristic polynomial of non-square matrix is not defined");
     }

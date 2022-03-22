@@ -10,7 +10,6 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/honeybadger/hse/linear-algebra-library/Poly.cpp" "/Users/honeybadger/hse/linear-algebra-library/cmake-build-debug/CMakeFiles/linal.dir/Poly.cpp.o"
   "/Users/honeybadger/hse/linear-algebra-library/Vec.cpp" "/Users/honeybadger/hse/linear-algebra-library/cmake-build-debug/CMakeFiles/linal.dir/Vec.cpp.o"
   "/Users/honeybadger/hse/linear-algebra-library/main.cpp" "/Users/honeybadger/hse/linear-algebra-library/cmake-build-debug/CMakeFiles/linal.dir/main.cpp.o"
-  "/Users/honeybadger/hse/linear-algebra-library/trash.cpp" "/Users/honeybadger/hse/linear-algebra-library/cmake-build-debug/CMakeFiles/linal.dir/trash.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 

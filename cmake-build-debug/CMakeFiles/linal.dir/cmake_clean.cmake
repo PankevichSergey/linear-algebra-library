@@ -5,7 +5,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/linal.dir/Poly.cpp.o"
   "CMakeFiles/linal.dir/Vec.cpp.o"
   "CMakeFiles/linal.dir/main.cpp.o"
-  "CMakeFiles/linal.dir/trash.cpp.o"
   "linal"
   "linal.pdb"
 )

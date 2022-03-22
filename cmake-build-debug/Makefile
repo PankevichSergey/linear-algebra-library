@@ -304,33 +304,6 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/linal.dir/build.make CMakeFiles/linal.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-trash.o: trash.cpp.o
-
-.PHONY : trash.o
-
-# target to build an object file
-trash.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/linal.dir/build.make CMakeFiles/linal.dir/trash.cpp.o
-.PHONY : trash.cpp.o
-
-trash.i: trash.cpp.i
-
-.PHONY : trash.i
-
-# target to preprocess a source file
-trash.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/linal.dir/build.make CMakeFiles/linal.dir/trash.cpp.i
-.PHONY : trash.cpp.i
-
-trash.s: trash.cpp.s
-
-.PHONY : trash.s
-
-# target to generate assembly for a file
-trash.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/linal.dir/build.make CMakeFiles/linal.dir/trash.cpp.s
-.PHONY : trash.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -358,9 +331,6 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... trash.o"
-	@echo "... trash.i"
-	@echo "... trash.s"
 .PHONY : help
 
 

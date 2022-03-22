@@ -111,9 +111,6 @@
 		<Unit filename="/Users/honeybadger/hse/linear-algebra-library/main.cpp">
 			<Option target="linal"/>
 		</Unit>
-		<Unit filename="/Users/honeybadger/hse/linear-algebra-library/trash.cpp">
-			<Option target="linal"/>
-		</Unit>
 		<Unit filename="/Users/honeybadger/hse/linear-algebra-library/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

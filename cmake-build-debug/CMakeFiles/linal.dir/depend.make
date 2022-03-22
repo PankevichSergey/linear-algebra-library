@@ -23,10 +23,7 @@ CMakeFiles/linal.dir/Vec.cpp.o: ../Vec.h
 
 CMakeFiles/linal.dir/main.cpp.o: ../Mat.h
 CMakeFiles/linal.dir/main.cpp.o: ../Num.h
-CMakeFiles/linal.dir/main.cpp.o: ../Perm.h
 CMakeFiles/linal.dir/main.cpp.o: ../Poly.h
 CMakeFiles/linal.dir/main.cpp.o: ../Vec.h
 CMakeFiles/linal.dir/main.cpp.o: ../main.cpp
-
-CMakeFiles/linal.dir/trash.cpp.o: ../trash.cpp
 

@@ -118,4 +118,12 @@ ll Num::Toll() const {
     return num_;
 }
 
+bool Num::operator<(const Num &rhs) const {
+    return num_ * rhs.den_ < rhs.num_ * den_;
+}
+
+Num Num::Abs() const {
+    return Num(abs(num_), den_);
+}
+
 

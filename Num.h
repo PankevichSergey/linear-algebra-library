@@ -26,6 +26,8 @@ public:
     Num& operator /= (const Num& rhs);
     bool operator == (const Num& rhs) const;
     bool operator != (const Num& rhs) const;
+    bool operator < (const Num& rhs) const;
+    Num Abs() const;
     friend std::ostream& operator << (std::ostream& os, const Num& num);
     friend std::istream& operator >> (std::istream& is, Num& num);
     ll Toll() const;
