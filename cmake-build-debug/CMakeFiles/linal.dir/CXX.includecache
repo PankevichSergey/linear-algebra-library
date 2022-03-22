@@ -6,6 +6,12 @@
 
 #IncludeRegexTransform: 
 
+/Users/honeybadger/hse/linear-algebra-library/Mat.cpp
+Mat.h
+/Users/honeybadger/hse/linear-algebra-library/Mat.h
+Perm.h
+/Users/honeybadger/hse/linear-algebra-library/Perm.h
+
 /Users/honeybadger/hse/linear-algebra-library/Mat.h
 iostream
 -
@@ -24,11 +30,21 @@ cstdint
 iostream
 -
 
+/Users/honeybadger/hse/linear-algebra-library/Perm.h
+vector
+-
+iostream
+-
+
 /Users/honeybadger/hse/linear-algebra-library/Poly.h
 iostream
 -
 vector
 -
+
+/Users/honeybadger/hse/linear-algebra-library/Vec.cpp
+Vec.h
+/Users/honeybadger/hse/linear-algebra-library/Vec.h
 
 /Users/honeybadger/hse/linear-algebra-library/Vec.h
 vector
@@ -37,8 +53,8 @@ Num.h
 /Users/honeybadger/hse/linear-algebra-library/Num.h
 
 /Users/honeybadger/hse/linear-algebra-library/main.cpp
+iostream
+-
 Mat.h
 /Users/honeybadger/hse/linear-algebra-library/Mat.h
-random
--
 

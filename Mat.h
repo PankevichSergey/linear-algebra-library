@@ -17,8 +17,8 @@ public:
     explicit Mat(size_t n);
     Mat(size_t m, size_t n);
     Mat(const std::vector<Vec>& mat);
-    Mat(const std::vector<std::vector<ll>>& mat);
-    Mat(const std::vector<std::vector<Num>>& mat);
+    static Mat ByCols(const std::vector<Vec>& mat);
+    static Mat ByCol(const Vec& vec);
     Mat operator + (const Mat& rhs) const;
     Mat operator - (const Mat& rhs) const;
     Mat operator * (const Mat& rhs) const;
@@ -46,6 +46,8 @@ public:
     void Eliminate();
     Num Trace() const;
     Num Det() const;
+    std::vector<size_t> GetColBasis() const;
+    size_t Rank();
     Poly GetCharPoly() const;
 private:
     size_t m_ = 0;

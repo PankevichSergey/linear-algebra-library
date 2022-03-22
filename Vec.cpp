@@ -126,12 +126,7 @@ size_t Vec::size() const {
     return a_.size();
 }
 
-Vec::Vec(const std::vector<ll> &vec) {
-    a_.reserve(vec.size());
-    for (ll x : vec) {
-        a_.emplace_back(x);
-    }
-}
+
 
 
 

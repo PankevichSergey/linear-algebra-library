@@ -32,20 +32,6 @@ Mat::Mat(const std::vector<Vec> &mat) {
     }
 }
 
-Mat::Mat(const std::vector<std::vector<Num>> &mat) {
-    if (mat.size() == 0 || mat[0].size() == 0) {
-        throw std::logic_error("can't create empty matrix");
-    }
-    m_ = mat.size();
-    n_ = mat[0].size();
-    t_.reserve(m_);
-    for (const auto& vec : mat) {
-        if (vec.size() != n_) {
-            throw std::logic_error("can't create matrix with different rows' sizes");
-        }
-        t_.emplace_back(vec);
-    }
-}
 
 Mat Mat::operator+(const Mat &rhs) const {
     if (this->Height() != rhs.Height() || this->Width() != rhs.Width()) {
@@ -222,20 +208,6 @@ void Mat::Eliminate() {
     }
 }
 
-Mat::Mat(const std::vector<std::vector<ll>> &mat) {
-    if (mat.empty() || mat[0].empty()) {
-        throw std::logic_error("can't create empty matrix");
-    }
-    m_ = mat.size();
-    n_ = mat[0].size();
-    t_.reserve(m_);
-    for (const auto& vec : mat) {
-        if (vec.size() != n_) {
-            throw std::logic_error("can't create matrix with different rows' sizes");
-        }
-        t_.emplace_back(vec);
-    }
-}
 
 bool Mat::operator==(const Mat &rhs) const {
     if (n_ != rhs.n_ || m_ != rhs.m_) {
@@ -369,6 +341,8 @@ Num Mat::Det() const {
     }
     return det;
 }
+
+
 Poly PolyDet(const std::vector<std::vector<Poly>>& A) {
     Perm p(A.size());
     Poly det;
@@ -402,4 +376,53 @@ Poly Mat::GetCharPoly() const {
     }
     return PolyDet(help);
 }
+
+Mat Mat::ByCols(const std::vector<Vec> &mat) {
+    if (mat.empty()) {
+        throw std::logic_error("can't create empty matrix");
+    }
+    size_t m = mat[0].size();
+    size_t n = mat.size();
+    Mat res(m, n);
+    for (size_t i = 0; i < m; ++i) {
+        for (size_t j = 0; j < n; ++j) {
+            res[i][j] = mat[j][i];
+        }
+    }
+    return res;
+}
+
+Mat Mat::ByCol(const Vec& vec) {
+    return ByCols({vec});
+}
+
+std::vector<size_t> Mat::GetColBasis() const {
+    std::vector<size_t> res;
+    Mat help(*this);
+    help.Eliminate();
+    size_t i = 0;
+    for (size_t j = 0; j < n_ && i < m_; ++j) {
+        if (help[i][j] != 0) {
+            res.push_back(j);
+            ++i;
+        }
+    }
+    return res;
+}
+
+size_t Mat::Rank() {
+    Mat help(*this);
+    help.Eliminate();
+    size_t rank = 0;
+    size_t i = 0;
+    for (size_t j = 0; j < n_ && i < m_; ++j) {
+        if (help[i][j] != 0) {
+            ++rank;
+            ++i;
+        }
+    }
+    return rank;
+}
+
+
 
