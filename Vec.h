@@ -12,7 +12,6 @@ public:
     Vec() = default;
     explicit Vec(size_t n);
     Vec(const std::vector<Num>& vec);
-    Vec(std::vector<Num>&& vec);
     size_t size() const;
     Vec operator-() const;
     Vec operator+ (const Vec& vec) const;

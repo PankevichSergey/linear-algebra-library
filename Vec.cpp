@@ -11,9 +11,6 @@ Vec::Vec(const std::vector<Num> &vec) {
     a_ = vec;
 }
 
-Vec::Vec(std::vector<Num>&& vec) {
-    swap(a_, vec);
-}
 
 Vec Vec::operator-() const {
     Vec result;
