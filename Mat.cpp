@@ -5,26 +5,26 @@
 #include "Mat.h"
 #include "Perm.h"
 
-Mat::Mat(size_t n): n_(n), m_(n), t_(std::vector<Vec>(n, Vec(n))) {
+Mat::Mat(size_t n) : n_(n), m_(n), t_(std::vector<Vec>(n, Vec(n))) {
     if (n == 0) {
         throw std::logic_error("can't create empty matrix");
     }
 }
 
-Mat::Mat(size_t m, size_t n): m_(m), n_(n), t_(std::vector<Vec>(m, Vec(n))) {
+Mat::Mat(size_t m, size_t n) : m_(m), n_(n), t_(std::vector<Vec>(m, Vec(n))) {
     if (n == 0 || m == 0) {
         throw std::logic_error("can't create empty matrix");
     }
 }
 
 Mat::Mat(const std::vector<Vec> &mat) {
-    if (mat.size() == 0 || mat[0].size() == 0) {
+    if (mat.empty() == 0 || mat[0].size() == 0) {
         throw std::logic_error("can't create empty matrix");
     }
     m_ = mat.size();
     n_ = mat[0].size();
     t_.reserve(m_);
-    for (const Vec& vec : mat) {
+    for (const Vec &vec : mat) {
         if (vec.size() != n_) {
             throw std::logic_error("can't create matrix with different rows' sizes");
         }
@@ -32,10 +32,25 @@ Mat::Mat(const std::vector<Vec> &mat) {
     }
 }
 
+Mat::Mat(std::vector<Vec> &&mat) {
+    if (mat.size() == 0 || mat[0].size() == 0) {
+        throw std::logic_error("can't create empty matrix");
+    }
+    m_ = mat.size();
+    n_ = mat[0].size();
+    t_.reserve(m_);
+    for (const Vec &vec : mat) {
+        if (vec.size() != n_) {
+            throw std::logic_error("can't create matrix with different rows' sizes");
+        }
+        t_.emplace_back(vec);
+    }
+}
+
 
 Mat Mat::operator+(const Mat &rhs) const {
     if (this->Height() != rhs.Height() || this->Width() != rhs.Width()) {
-        throw std::logic_error("can't add matrices of different size");
+        throw std::logic_error("can't add matrices with different size");
     }
     Mat result(m_, n_);
     for (size_t i = 0; i < m_; ++i) {
@@ -48,7 +63,7 @@ Mat Mat::operator+(const Mat &rhs) const {
 
 Mat Mat::operator-(const Mat &rhs) const {
     if (this->Height() != rhs.Height() || this->Width() != rhs.Width()) {
-        throw std::logic_error("can't subtract matrices of different size");
+        throw std::logic_error("can't subtract matrices with different size");
     }
     Mat result(m_, n_);
     for (size_t i = 0; i < m_; ++i) {
@@ -76,7 +91,7 @@ Mat Mat::operator*(const Mat &rhs) const {
 
 Mat Mat::operator*(const Num &x) const {
     Mat result(t_);
-    for (Vec& vec : result.t_) {
+    for (Vec &vec : result.t_) {
         for (size_t j = 0; j < n_; ++j) {
             vec[j] *= x;
         }
@@ -84,7 +99,7 @@ Mat Mat::operator*(const Num &x) const {
     return result;
 }
 
-Mat Mat::operator^(ll p) const {
+Mat Mat::operator^(int64_t p) const {
     Mat result = Identity(m_);
     Mat power = *this;
     while (p > 0) {
@@ -100,12 +115,12 @@ Mat Mat::operator^(ll p) const {
     return result;
 }
 
-Mat &Mat::operator^=(ll p) {
+Mat &Mat::operator^=(int64_t p) {
     return *this = *this ^ p;
 }
 
-Mat &Mat::operator*=(const Num &x)  {
-    for (Vec& vec : t_) {
+Mat &Mat::operator*=(const Num &x) {
+    for (Vec &vec : t_) {
         for (size_t j = 0; j < n_; ++j) {
             vec[j] *= x;
         }
@@ -115,7 +130,7 @@ Mat &Mat::operator*=(const Num &x)  {
 
 Mat &Mat::operator+=(const Mat &rhs) {
     if (this->Height() != rhs.Height() || this->Width() != rhs.Width()) {
-        throw std::logic_error("can't add matrices of different size");
+        throw std::logic_error("can't multiply matrices with different width and height");
     }
     for (size_t i = 0; i < m_; ++i) {
         for (size_t j = 0; j < n_; ++j) {
@@ -127,7 +142,7 @@ Mat &Mat::operator+=(const Mat &rhs) {
 
 Mat &Mat::operator-=(const Mat &rhs) {
     if (this->Height() != rhs.Height() || this->Width() != rhs.Width()) {
-        throw std::logic_error("can't subtract matrices of different size");
+        throw std::logic_error("can't subtract matrices with different size");
     }
     for (size_t i = 0; i < m_; ++i) {
         for (size_t j = 0; j < n_; ++j) {
@@ -166,14 +181,14 @@ Mat &Mat::operator*=(const Mat &rhs) {
 }
 
 std::ostream &operator<<(std::ostream &os, const Mat &mat) {
-    for (const Vec& vec : mat.t_) {
+    for (const Vec &vec : mat.t_) {
         os << vec << std::endl;
     }
     return os;
 }
 
 std::istream &operator>>(std::istream &is, Mat &mat) {
-    for (Vec& vec : mat.t_) {
+    for (Vec &vec : mat.t_) {
         is >> vec;
     }
     return is;
@@ -323,7 +338,7 @@ Num Mat::Det() const {
             if (t[i][j] == 0) {
                 continue;
             }
-            if (best == n_  || t[best][j].Abs() < t[i][j].Abs()) {
+            if (best == n_ || t[best][j].Abs() < t[i][j].Abs()) {
                 best = i;
             }
         }
@@ -343,7 +358,7 @@ Num Mat::Det() const {
 }
 
 
-Poly PolyDet(const std::vector<std::vector<Poly>>& A) {
+Poly PolyDet(const std::vector<std::vector<Poly>> &A) {
     Perm p(A.size());
     Poly det;
     do {
@@ -392,7 +407,7 @@ Mat Mat::ByCols(const std::vector<Vec> &mat) {
     return res;
 }
 
-Mat Mat::ByCol(const Vec& vec) {
+Mat Mat::ByCol(const Vec &vec) {
     return ByCols({vec});
 }
 
@@ -423,6 +438,3 @@ size_t Mat::Rank() {
     }
     return rank;
 }
-
-
-

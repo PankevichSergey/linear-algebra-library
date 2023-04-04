@@ -4,12 +4,12 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/honeybadger/hse/linear-algebra-library/Mat.cpp" "/Users/honeybadger/hse/linear-algebra-library/cmake-build-debug/CMakeFiles/linal.dir/Mat.cpp.o"
-  "/Users/honeybadger/hse/linear-algebra-library/Num.cpp" "/Users/honeybadger/hse/linear-algebra-library/cmake-build-debug/CMakeFiles/linal.dir/Num.cpp.o"
-  "/Users/honeybadger/hse/linear-algebra-library/Perm.cpp" "/Users/honeybadger/hse/linear-algebra-library/cmake-build-debug/CMakeFiles/linal.dir/Perm.cpp.o"
-  "/Users/honeybadger/hse/linear-algebra-library/Poly.cpp" "/Users/honeybadger/hse/linear-algebra-library/cmake-build-debug/CMakeFiles/linal.dir/Poly.cpp.o"
-  "/Users/honeybadger/hse/linear-algebra-library/Vec.cpp" "/Users/honeybadger/hse/linear-algebra-library/cmake-build-debug/CMakeFiles/linal.dir/Vec.cpp.o"
-  "/Users/honeybadger/hse/linear-algebra-library/main.cpp" "/Users/honeybadger/hse/linear-algebra-library/cmake-build-debug/CMakeFiles/linal.dir/main.cpp.o"
+  "/Users/honeybadger/gh/linear-algebra-library/Mat.cpp" "/Users/honeybadger/gh/linear-algebra-library/cmake-build-debug/CMakeFiles/linal.dir/Mat.cpp.o"
+  "/Users/honeybadger/gh/linear-algebra-library/Num.cpp" "/Users/honeybadger/gh/linear-algebra-library/cmake-build-debug/CMakeFiles/linal.dir/Num.cpp.o"
+  "/Users/honeybadger/gh/linear-algebra-library/Perm.cpp" "/Users/honeybadger/gh/linear-algebra-library/cmake-build-debug/CMakeFiles/linal.dir/Perm.cpp.o"
+  "/Users/honeybadger/gh/linear-algebra-library/Poly.cpp" "/Users/honeybadger/gh/linear-algebra-library/cmake-build-debug/CMakeFiles/linal.dir/Poly.cpp.o"
+  "/Users/honeybadger/gh/linear-algebra-library/Vec.cpp" "/Users/honeybadger/gh/linear-algebra-library/cmake-build-debug/CMakeFiles/linal.dir/Vec.cpp.o"
+  "/Users/honeybadger/gh/linear-algebra-library/main.cpp" "/Users/honeybadger/gh/linear-algebra-library/cmake-build-debug/CMakeFiles/linal.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 

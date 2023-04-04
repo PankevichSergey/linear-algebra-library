@@ -56,11 +56,16 @@ void Poly::Normalize() {
             normalized.pop_back();
         }
     }
-    poly_ = normalized;
+    poly_ = std::move(normalized);
 }
 
 Poly::Poly(const std::vector<Mono>& monos) {
     poly_ = monos;
+    Normalize();
+}
+
+Poly::Poly(std::vector<Mono> &&monos) {
+    poly_ = std::move(monos);
     Normalize();
 }
 
@@ -131,7 +136,6 @@ std::ostream& operator<<(std::ostream& out, const Poly::Mono& mono) {
     return out;
 }
 std::ostream& operator<<(std::ostream& out, const Poly& poly) {
-    //out << "y =";
     if (poly.poly_.empty()) {
         out << " 0";
     } else {

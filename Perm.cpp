@@ -19,16 +19,16 @@ int Perm::operator[](int i) const {
     return p_[i];
 }
 
-int Perm::size() const {
+size_t Perm::Size() const {
     return p_.size();
 }
 
 Perm Perm::operator*(const Perm &rhs) const {
-    if (rhs.size() != this->size()) {
+    if (rhs.Size() != this->Size()) {
         throw std::logic_error("can't multiply permutations of different lengths");
     }
-    Perm res(rhs.size());
-    for (int i = 0; i < rhs.size(); ++i) {
+    Perm res(rhs.Size());
+    for (int i = 0; i < rhs.Size(); ++i) {
         res.p_[i] = p_[rhs[i]];
     }
     return res;
@@ -36,16 +36,16 @@ Perm Perm::operator*(const Perm &rhs) const {
 
 Perm Perm::operator^(int a) const {
     if (a == -1) {
-        Perm res(this->size());
-        for (int i = 0; i < this->size(); ++i) {
+        Perm res(this->Size());
+        for (int i = 0; i < this->Size(); ++i) {
             res.p_[p_[i]] = i;
         }
         return res;
     }
     if (a < 0) {
-        return (*this^(-1)) ^ (-a);
+        return (*this ^ (-1)) ^ (-a);
     }
-    Perm res(this->size());
+    Perm res(this->Size());
     Perm help = *this;
     while (a != 0) {
         if (a & 1) {
@@ -66,7 +66,7 @@ void Perm::operator^=(int a) {
 }
 
 std::istream &operator>>(std::istream &is, Perm &p) {
-    for (int& x : p.p_) {
+    for (int &x : p.p_) {
         is >> x;
     }
     return is;
@@ -81,7 +81,7 @@ std::ostream &operator<<(std::ostream &os, const Perm &p) {
 
 Perm::Perm(const std::vector<std::vector<int>> &cycles) {
 
-    for (const auto& cycle : cycles) {
+    for (const auto &cycle : cycles) {
         for (int x : cycle) {
             if (p_.size() <= x) {
                 p_.resize(x + 1, -1);
@@ -106,14 +106,14 @@ bool Perm::operator==(const Perm &rhs) const {
     return p_ == rhs.p_;
 }
 
-void Perm::Add1() {
-    for (int&x : p_) {
+void Perm::IncrementElements() {
+    for (int &x : p_) {
         ++x;
     }
 }
 
-void Perm::Subtract1() {
-    for (int&x : p_) {
+void Perm::DecrementElements() {
+    for (int &x : p_) {
         --x;
     }
 }
@@ -127,7 +127,7 @@ bool Perm::NextPermutation() {
         if (p_[i - 1] > p_[i]) {
             continue;
         }
-        int first_less = p_.size();
+        int first_less = this->Size();
         for (int j = i; j < p_.size(); ++j) {
             if (p_[j] < p_[i - 1]) {
                 first_less = j;
@@ -138,14 +138,15 @@ bool Perm::NextPermutation() {
         std::reverse(p_.begin() + i, p_.end());
         return true;
     }
+    return false;
 }
 
 std::vector<std::vector<int>> Perm::GetCycles() const {
-    std::vector<char> used(this->size());
+    std::vector<char> used(this->Size());
     std::vector<std::vector<int>> cycles;
-    for (int i = 0; i < this->size(); ++i) {
+    for (int i = 0; i < this->Size(); ++i) {
         if (!used[i]) {
-            auto& cycle = cycles.emplace_back();
+            auto &cycle = cycles.emplace_back();
             int j = i;
             while (!used[j]) {
                 cycle.push_back(j);
@@ -158,11 +159,8 @@ std::vector<std::vector<int>> Perm::GetCycles() const {
 }
 
 int Perm::Sgn() const {
-    if (GetCycles().size() % 2 == this->size() % 2) {
+    if (GetCycles().size() % 2 == this->Size() % 2) {
         return 1;
     }
     return -1;
 }
-
-
-

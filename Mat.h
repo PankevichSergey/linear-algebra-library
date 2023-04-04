@@ -13,42 +13,80 @@
 
 class Mat {
 public:
+    static Mat ByCols(const std::vector<Vec> &mat);
+
+    static Mat ByCol(const Vec &vec);
+
     static Mat Identity(size_t n);
+
     explicit Mat(size_t n);
-    Mat(size_t m, size_t n);
-    Mat(const std::vector<Vec>& mat);
-    static Mat ByCols(const std::vector<Vec>& mat);
-    static Mat ByCol(const Vec& vec);
-    Mat operator + (const Mat& rhs) const;
-    Mat operator - (const Mat& rhs) const;
-    Mat operator * (const Mat& rhs) const;
-    Mat operator * (const Num& x) const;
-    Mat operator ^ (ll p) const;
-    Mat& operator^= (ll p);
-    Mat& operator *= (const Num& x) ;
-    Mat& operator += (const Mat& rhs);
-    Mat& operator -= (const Mat& rhs);
-    Mat& operator *= (const Mat& rhs);
-    const Vec& operator[](size_t i) const;
-    Vec& operator[](size_t i);
-    bool operator == (const Mat& rhs) const;
-    bool operator != (const Mat& rhs) const;
-    Mat ConRight(const Mat& rhs) const;
-    Mat ConDown(const Mat& rhs) const;
+
+    explicit Mat(size_t m, size_t n);
+
+    explicit Mat(const std::vector<Vec> &mat);
+
+    explicit Mat(std::vector<Vec> &&mat);
+
+    Mat operator+(const Mat &rhs) const;
+
+    Mat operator-(const Mat &rhs) const;
+
+    Mat operator*(const Mat &rhs) const;
+
+    Mat operator*(const Num &x) const;
+
+    Mat operator^(int64_t p) const;
+
+    Mat &operator^=(int64_t p);
+
+    Mat &operator*=(const Num &x);
+
+    Mat &operator+=(const Mat &rhs);
+
+    Mat &operator-=(const Mat &rhs);
+
+    Mat &operator*=(const Mat &rhs);
+
+    const Vec &operator[](size_t i) const;
+
+    Vec &operator[](size_t i);
+
+    bool operator==(const Mat &rhs) const;
+
+    bool operator!=(const Mat &rhs) const;
+
+    Mat ConRight(const Mat &rhs) const;
+
+    Mat ConDown(const Mat &rhs) const;
+
     bool HasInverse() const;
+
     Mat GetInverse() const;
+
     Mat SliceRows(size_t l, size_t r) const;
+
     Mat SliceCols(size_t l, size_t r) const;
+
     size_t Height() const;
+
     size_t Width() const;
-    friend std::ostream& operator << (std::ostream& os, const Mat& mat);
-    friend std::istream& operator >> (std::istream& is, Mat& mat);
+
+    friend std::ostream &operator<<(std::ostream &os, const Mat &mat);
+
+    friend std::istream &operator>>(std::istream &is, Mat &mat);
+
     void Eliminate();
+
     Num Trace() const;
+
     Num Det() const;
+
     std::vector<size_t> GetColBasis() const;
+
     size_t Rank();
+
     Poly GetCharPoly() const;
+
 private:
     size_t m_ = 0;
     size_t n_ = 0;

@@ -5,7 +5,7 @@
 #include "Num.h"
 #include <algorithm>
 
-ll gcd(ll a, ll b) {
+int64_t gcd(int64_t a, int64_t b) {
     a = std::abs(a);
     b = std::abs(b);
     while (b) {
@@ -15,11 +15,11 @@ ll gcd(ll a, ll b) {
     return a;
 }
 
-Num::Num(): num_(0), den_(1) {}
+Num::Num() : num_(0), den_(1) {}
 
-Num::Num(ll x): num_(x), den_(1) {}
+Num::Num(int64_t x) : num_(x), den_(1) {}
 
-Num::Num(ll num, ll den): num_(num), den_(den) {
+Num::Num(int64_t num, int64_t den) : num_(num), den_(den) {
     Reduce();
 }
 
@@ -46,7 +46,7 @@ Num Num::operator/(const Num &rhs) const {
     return Num(num_ * rhs.den_, den_ * rhs.num_);
 }
 
-Num& Num::operator+=(const Num &rhs) {
+Num &Num::operator+=(const Num &rhs) {
     num_ *= rhs.den_;
     num_ += rhs.num_ * den_;
     den_ *= rhs.den_;
@@ -54,7 +54,7 @@ Num& Num::operator+=(const Num &rhs) {
     return *this;
 }
 
-Num& Num::operator-=(const Num &rhs) {
+Num &Num::operator-=(const Num &rhs) {
     num_ *= rhs.den_;
     num_ -= rhs.num_ * den_;
     den_ *= rhs.den_;
@@ -62,14 +62,14 @@ Num& Num::operator-=(const Num &rhs) {
     return *this;
 }
 
-Num& Num::operator*=(const Num &rhs) {
+Num &Num::operator*=(const Num &rhs) {
     num_ *= rhs.num_;
     den_ *= rhs.den_;
     Reduce();
     return *this;
 }
 
-Num& Num::operator/=(const Num &rhs) {
+Num &Num::operator/=(const Num &rhs) {
     if (rhs.num_ == 0) {
         throw std::logic_error("division by zero");
     }
@@ -88,7 +88,7 @@ std::ostream &operator<<(std::ostream &os, const Num &num) {
 }
 
 void Num::Reduce() {
-    ll g = gcd(num_, den_);
+    int64_t g = gcd(num_, den_);
     num_ /= g;
     den_ /= g;
     if (den_ < 0) {
@@ -111,9 +111,9 @@ bool Num::operator!=(const Num &rhs) const {
     return num_ != rhs.num_ || den_ != rhs.den_;
 }
 
-ll Num::Toll() const {
+int64_t Num::Toll() const {
     if (den_ != 1) {
-        throw std::logic_error("can't cast rational to integer");
+        throw std::logic_error("numer is not an integer");
     }
     return num_;
 }
@@ -125,5 +125,3 @@ bool Num::operator<(const Num &rhs) const {
 Num Num::Abs() const {
     return Num(abs(num_), den_);
 }
-
-

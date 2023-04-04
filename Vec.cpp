@@ -5,17 +5,20 @@
 #include "Vec.h"
 
 
-Vec::Vec(size_t n): a_(n, Num()) {}
+Vec::Vec(size_t n) : a_(n, Num()) {}
 
 Vec::Vec(const std::vector<Num> &vec) {
     a_ = vec;
 }
 
+Vec::Vec(std::vector<Num> &&vec) {
+    a_ = std::move(vec);
+}
 
 Vec Vec::operator-() const {
     Vec result;
     result.a_.reserve(a_.size());
-    for (const Num& x : a_) {
+    for (const Num &x : a_) {
         result.a_.push_back(-x);
     }
     return result;
@@ -38,7 +41,7 @@ Vec Vec::operator-(const Vec &vec) const {
 
 Vec Vec::operator*(const Num &x) const {
     Vec result(a_);
-    for (Num& num : result.a_) {
+    for (Num &num : result.a_) {
         num *= x;
     }
     return result;
@@ -46,7 +49,7 @@ Vec Vec::operator*(const Num &x) const {
 
 Vec Vec::operator/(const Num &x) const {
     Vec result(a_);
-    for (Num& num : result.a_) {
+    for (Num &num : result.a_) {
         num /= x;
     }
     return result;
@@ -73,14 +76,14 @@ Vec &Vec::operator-=(const Vec &vec) {
 }
 
 Vec &Vec::operator*=(const Num &x) {
-    for (Num& num: a_) {
+    for (Num &num: a_) {
         num *= x;
     }
     return *this;
 }
 
 Vec &Vec::operator/=(const Num &x) {
-    for (Num& num : a_) {
+    for (Num &num : a_) {
         num /= x;
     }
     return *this;
@@ -106,14 +109,14 @@ Num &Vec::operator[](size_t i) {
 }
 
 std::ostream &operator<<(std::ostream &os, const Vec &vec) {
-    for (const Num& num : vec.a_) {
+    for (const Num &num : vec.a_) {
         os << num << ' ';
     }
     return os;
 }
 
 std::istream &operator>>(std::istream &is, Vec &vec) {
-    for (Num& num : vec.a_) {
+    for (Num &num : vec.a_) {
         is >> num;
     }
     return is;
@@ -122,6 +125,8 @@ std::istream &operator>>(std::istream &is, Vec &vec) {
 size_t Vec::size() const {
     return a_.size();
 }
+
+
 
 
 

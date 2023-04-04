@@ -10,24 +10,37 @@
 
 class Perm {
 public:
-    Perm(const std::vector<int>& a);
-    Perm(const std::vector<std::vector<int>>& cycles);
-    Perm(int n);
+    explicit Perm(const std::vector<int> &a);
+
+    explicit Perm(const std::vector<std::vector<int>> &cycles);
+
+    explicit Perm(int n);
+
     int operator[](int i) const;
-    int size() const;
+
+    size_t Size() const;
+
     int Sgn() const;
+
     std::vector<std::vector<int>> GetCycles() const;
-    Perm operator * (const Perm& rhs) const;
-    Perm operator ^ (int a) const;
-    void operator *= (const Perm& rhs);
-    void operator ^= (int a);
-    friend std::istream& operator >> (std::istream& is, Perm& p);
-    friend std::ostream& operator << (std::ostream&os, const Perm& p);
-    bool operator == (const Perm& rhs) const;
 
-    void Add1();
+    Perm operator*(const Perm &rhs) const;
 
-    void Subtract1();
+    Perm operator^(int a) const;
+
+    void operator*=(const Perm &rhs);
+
+    void operator^=(int a);
+
+    friend std::istream &operator>>(std::istream &is, Perm &p);
+
+    friend std::ostream &operator<<(std::ostream &os, const Perm &p);
+
+    bool operator==(const Perm &rhs) const;
+
+    void IncrementElements();
+
+    void DecrementElements();
 
     bool NextPermutation();
 
