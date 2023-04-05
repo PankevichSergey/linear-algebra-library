@@ -10,7 +10,7 @@ Perm::Perm(const std::vector<int> &a) {
     this->p_ = a;
 }
 
-Perm::Perm(int n) {
+Perm::Perm(size_t n) {
     p_.resize(n);
     std::iota(p_.begin(), p_.end(), 0);
 }

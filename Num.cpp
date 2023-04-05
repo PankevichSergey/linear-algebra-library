@@ -125,3 +125,7 @@ bool Num::operator<(const Num &rhs) const {
 Num Num::Abs() const {
     return Num(abs(num_), den_);
 }
+
+Num abs(Num x) {
+    return x.Abs();
+}

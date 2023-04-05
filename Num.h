@@ -56,3 +56,5 @@ private:
 };
 
 
+Num abs(Num x);
+

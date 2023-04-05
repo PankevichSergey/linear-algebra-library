@@ -6,7 +6,7 @@
 
 #include <vector>
 
-template <typename T>
+template<typename T>
 class Vec {
 public:
     Vec() = default;
@@ -43,10 +43,10 @@ public:
 
     T &operator[](size_t i);
 
-    template <typename T1>
+    template<typename T1>
     friend std::ostream &operator<<(std::ostream &os, const Vec<T1> &vec);
 
-    template <typename T1>
+    template<typename T1>
     friend std::istream &operator>>(std::istream &is, Vec<T1> &vec);
 
 private:
@@ -66,8 +66,9 @@ template<typename T>
 Vec<T>::Vec(std::vector<T> &&vec) {
     a_ = std::move(vec);
 }
+
 template<typename T>
-Vec<T> Vec<T>:: operator-() const {
+Vec<T> Vec<T>::operator-() const {
     Vec result;
     result.a_.reserve(a_.size());
     for (const T &x : a_) {
@@ -110,8 +111,9 @@ Vec<T> Vec<T>::operator/(const T &x) const {
     }
     return result;
 }
+
 template<typename T>
-Vec<T>& Vec<T>::operator+=(const Vec &vec) {
+Vec<T> &Vec<T>::operator+=(const Vec &vec) {
     if (this->size() != vec.size()) {
         throw std::logic_error("can't add and subtract vectors with different lengths");
     }
@@ -122,7 +124,7 @@ Vec<T>& Vec<T>::operator+=(const Vec &vec) {
 }
 
 template<typename T>
-Vec<T>& Vec<T>::operator-=(const Vec &vec) {
+Vec<T> &Vec<T>::operator-=(const Vec &vec) {
     if (this->size() != vec.size()) {
         throw std::logic_error("can't add and subtract vectors with different lengths");
     }
@@ -131,8 +133,9 @@ Vec<T>& Vec<T>::operator-=(const Vec &vec) {
     }
     return *this;
 }
+
 template<typename T>
-Vec<T>& Vec<T>::operator*=(const T &x) {
+Vec<T> &Vec<T>::operator*=(const T &x) {
     for (T &num: a_) {
         num *= x;
     }
@@ -140,7 +143,7 @@ Vec<T>& Vec<T>::operator*=(const T &x) {
 }
 
 
-template <typename T>
+template<typename T>
 Vec<T> &Vec<T>::operator/=(const T &x) {
     for (T &num : a_) {
         num /= x;
@@ -149,7 +152,7 @@ Vec<T> &Vec<T>::operator/=(const T &x) {
 }
 
 
-template <typename T>
+template<typename T>
 T Vec<T>::operator^(const Vec<T> &vec) const {
     if (this->size() != vec.size()) {
         throw std::logic_error("dot product of vectors with different lengths doesn't exists");
@@ -162,19 +165,19 @@ T Vec<T>::operator^(const Vec<T> &vec) const {
 }
 
 
-template <typename T>
-const T& Vec<T>::operator[](size_t i) const {
+template<typename T>
+const T &Vec<T>::operator[](size_t i) const {
     return a_[i];
 }
 
 
-template <typename T>
-T& Vec<T>::operator[](size_t i) {
+template<typename T>
+T &Vec<T>::operator[](size_t i) {
     return a_[i];
 }
 
 
-template <typename T>
+template<typename T>
 std::ostream &operator<<(std::ostream &os, const Vec<T> &vec) {
     for (const T &num : vec.a_) {
         os << num << ' ';
@@ -183,7 +186,7 @@ std::ostream &operator<<(std::ostream &os, const Vec<T> &vec) {
 }
 
 
-template <typename T>
+template<typename T>
 std::istream &operator>>(std::istream &is, Vec<T> &vec) {
     for (T &num : vec.a_) {
         is >> num;
@@ -192,7 +195,7 @@ std::istream &operator>>(std::istream &is, Vec<T> &vec) {
 }
 
 
-template <typename T>
+template<typename T>
 size_t Vec<T>::size() const {
     return a_.size();
 }

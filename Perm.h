@@ -14,7 +14,7 @@ public:
 
     explicit Perm(const std::vector<std::vector<int>> &cycles);
 
-    explicit Perm(int n);
+    explicit Perm(size_t n);
 
     int operator[](int i) const;
 
